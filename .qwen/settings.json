@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm add *)",
+      "Bash(pnpm *)",
+      "Bash(node *)",
+      "Bash(set *)",
+      "Bash(source *)"
+    ]
+  },
+  "$version": 3
+}

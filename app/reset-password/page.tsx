@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/lib/toast";
 import { RasenganLoader } from "@/components/rasengan-loader";
@@ -19,6 +19,7 @@ export default function ResetPasswordPage() {
     setLoading(true);
 
     try {
+      const supabase = createClient();
       const { error } = await supabase.auth.verifyOtp({
         email: "", // Supabase will use the session from the email link
         token: otp,
@@ -59,6 +60,7 @@ export default function ResetPasswordPage() {
     setLoading(true);
 
     try {
+      const supabase = createClient();
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
       });

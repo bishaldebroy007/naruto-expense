@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { toast } from "@/lib/toast";
 import { RasenganLoader } from "@/components/rasengan-loader";
@@ -16,6 +16,7 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     try {
+      const supabase = createClient();
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/reset-password`,
       });

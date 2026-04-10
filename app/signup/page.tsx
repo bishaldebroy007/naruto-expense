@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { toast, missionComplete, missionFailed } from "@/lib/toast";
+import { missionComplete, missionFailed, toast } from "@/lib/toast";
 import { RasenganLoader } from "@/components/rasengan-loader";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ export default function SignupPage() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       toast({
         title: "Chakra Mismatch",
@@ -34,6 +34,7 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
+      const supabase = createClient();
       const { error } = await supabase.auth.signUp({
         email,
         password,

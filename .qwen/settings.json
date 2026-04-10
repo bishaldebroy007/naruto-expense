@@ -6,7 +6,8 @@
       "Bash(node *)",
       "Bash(set *)",
       "Bash(source *)",
-      "Bash(mv *)"
+      "Bash(mv *)",
+      "Bash(grep *)"
     ]
   },
   "$version": 3

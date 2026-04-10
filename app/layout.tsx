@@ -3,8 +3,9 @@ import { Geist, Geist_Mono, Figtree } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/next";
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
+const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Naruto Finance - Ninja Expense Tracker",
-  description: "Track your expenses like a true ninja with the power of the Leaf Village!",
+  description:
+    "Track your expenses like a true ninja with the power of the Leaf Village!",
 };
 
 export default function RootLayout({
@@ -29,13 +31,22 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", "antialiased", geistSans.variable, geistMono.variable, "font-sans", figtree.variable)}
+      className={cn(
+        "h-full",
+        "antialiased",
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        "font-sans",
+        figtree.variable,
+      )}
       data-theme="light"
     >
       <body className="min-h-full flex flex-col">
         {children}
         <Toaster />
       </body>
+      <Analytics />
     </html>
   );
 }

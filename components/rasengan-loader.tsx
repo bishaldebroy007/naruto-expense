@@ -1,68 +1,71 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export function RasenganLoader() {
-  const [rotation, setRotation] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRotation((prev) => prev + 10);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="flex items-center justify-center min-h-[200px]">
-      <div className="relative w-20 h-20">
-        {/* Outer sphere */}
-        <div
-          className="absolute inset-0 rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle at 30% 30%, #60A5FA, #3B82F6, #2563EB, #1E40AF)",
-            boxShadow:
-              "0 0 30px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.3)",
-            transform: `rotate(${rotation}deg)`,
+    <div className="flex flex-col items-center justify-center min-h-[400px] w-full gap-8">
+      <div className="relative w-32 h-32">
+        {/* Inner Core */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: 360,
           }}
-        />
-        {/* Inner chakra */}
-        <div
-          className="absolute inset-2 rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle at 40% 40%, #93C5FD, #60A5FA, #3B82F6)",
-            boxShadow: "0 0 20px rgba(96, 165, 250, 0.9)",
-            transform: `rotate(${-rotation * 2}deg)`,
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
           }}
+          className="absolute inset-4 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 blur-sm shadow-[0_0_20px_rgba(34,211,238,0.8)]"
         />
-        {/* Core */}
-        <div
-          className="absolute inset-6 rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, #FFFFFF, #DBEAFE, #93C5FD)",
-            boxShadow: "0 0 15px rgba(255, 255, 255, 1)",
-          }}
-        />
-        {/* Rotating chakra arms */}
-        {[0, 120, 240].map((angle) => (
-          <div
-            key={angle}
-            className="absolute inset-0"
-            style={{ transform: `rotate(${rotation + angle}deg)` }}
-          >
-            <div
-              className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-4 rounded-full"
-              style={{
-                background:
-                  "linear-gradient(to top, #3B82F6, #60A5FA, transparent)",
-                boxShadow: "0 0 10px rgba(96, 165, 250, 0.8)",
-              }}
-            />
-          </div>
+
+        {/* Outer Swirls */}
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={i}
+            animate={{
+              rotate: i % 2 === 0 ? 360 : -360,
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 1.5 + i * 0.2,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute inset-0 rounded-full border-2 border-cyan-400/30 border-t-cyan-400 blur-[1px]"
+            style={{ padding: `${i * 8}px` }}
+          />
+        ))}
+
+        {/* Sparkles */}
+        {[...Array(4)].map((_, i) => (
+          <motion.div
+            key={i}
+            animate={{
+              opacity: [0, 1, 0],
+              scale: [0.5, 1.5, 0.5],
+              x: [0, (i % 2 === 0 ? 1 : -1) * 40],
+              y: [0, (i < 2 ? 1 : -1) * 40],
+            }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              delay: i * 0.2,
+            }}
+            className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full blur-[1px]"
+          />
         ))}
       </div>
+      
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="text-cyan-400 font-bold tracking-[0.2em] text-sm animate-pulse"
+      >
+        RELEASING CHAKRA...
+      </motion.div>
     </div>
   );
 }

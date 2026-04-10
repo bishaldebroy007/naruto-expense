@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "@/components/theme-provider";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Sun, Moon, LogOut, Settings, LayoutDashboard, Menu } from "lucide-react";
@@ -21,6 +21,7 @@ export function DashboardHeader() {
   const router = useRouter();
 
   const handleLogout = async () => {
+    const supabase = createClient();
     await supabase.auth.signOut();
     router.push("/login");
   };

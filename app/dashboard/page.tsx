@@ -5,24 +5,36 @@ import { getDashboardStats, getUserLimits } from "@/lib/db/actions";
 import { formatCurrency } from "@/lib/utils/expenses";
 import { RasenganLoader } from "@/components/rasengan-loader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import {
   TrendingUp,
   Wallet,
   Target,
   Calendar,
   Download,
-  Plus,
 } from "lucide-react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { exportExpensesToCSV } from "@/lib/db/actions";
 import { toast } from "@/lib/toast";
-import { categoryColors, categoryIcons } from "@/lib/utils/expenses";
 import { ChakraBarChart } from "@/components/chakra-bar-chart";
 import { ExpenseList } from "@/components/expense-list";
 import { ExpenseForm } from "@/components/expense-form";
 import { SpendingLimitProgress } from "@/components/spending-limit-progress";
+import { motion, AnimatePresence } from "framer-motion";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  show: { y: 0, opacity: 1 }
+};
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
@@ -80,140 +92,128 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <motion.div 
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="space-y-8 pb-12"
+    >
       {/* Page Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">
-            Dashboard
+          <h1 className="text-4xl font-black tracking-tight text-foreground uppercase">
+            Shinobi <span className="text-primary italic">Ledger</span>
           </h1>
-          <p className="text-muted-foreground mt-1">
-            Track your ninja spending
+          <p className="text-muted-foreground mt-2 font-medium">
+            Monitor your resource flow and mission costs.
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button onClick={handleExportCSV} variant="outline">
+        <div className="flex gap-3">
+          <Button 
+            onClick={handleExportCSV} 
+            variant="outline" 
+            className="h-11 px-6 border-2 font-bold hover:bg-muted"
+          >
             <Download className="h-4 w-4 mr-2" />
-            Export CSV
+            Scroll Export
           </Button>
           <ExpenseForm />
         </div>
-      </div>
+      </motion.div>
 
       {/* Summary Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Monthly Spending
-            </CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {formatCurrency(stats?.monthlySpent || 0)}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              This month
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Yearly Spending
-            </CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {formatCurrency(stats?.yearlySpent || 0)}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              This year
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              All-Time Spending
-            </CardTitle>
-            <Wallet className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {formatCurrency(stats?.allTimeSpent || 0)}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Total
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Top Category
-            </CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {stats?.topCategory || "N/A"}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              This month
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+      <motion.div variants={item} className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {[
+          { label: "Monthly Flow", value: stats?.monthlySpent, icon: Calendar, sub: "Current Moon" },
+          { label: "Yearly Path", value: stats?.yearlySpent, icon: TrendingUp, sub: "Full Cycle" },
+          { label: "Total Ryo", value: stats?.allTimeSpent, icon: Wallet, sub: "Lifetime" },
+          { label: "Primary Nature", value: stats?.topCategory || "N/A", icon: Target, sub: "Top Cost", isCurrency: false },
+        ].map((card, idx) => (
+          <Card key={idx} className="naruto-card border-none bg-card/40 hover:bg-card/60">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                {card.label}
+              </CardTitle>
+              <card.icon className="h-4 w-4 text-primary" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-black">
+                {card.isCurrency !== false ? formatCurrency(card.value || 0) : card.value}
+              </div>
+              <p className="text-[10px] font-bold uppercase tracking-tighter text-primary/60 mt-1">
+                {card.sub}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
+      </motion.div>
 
       {/* Spending Limit Progress */}
-      {limits && (limits.dailyLimitCents || limits.monthlyLimitCents || limits.yearlyLimitCents) && (
-        <SpendingLimitProgress limits={limits} />
-      )}
+      <AnimatePresence>
+        {limits && (limits.dailyLimitCents || limits.monthlyLimitCents || limits.yearlyLimitCents) && (
+          <motion.div 
+            variants={item}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+          >
+            <SpendingLimitProgress limits={limits} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Chart and Recent Expenses */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {/* Chart */}
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Chakra Nature Bars - Monthly Spending</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {stats?.categoryBreakdown && stats.categoryBreakdown.length > 0 ? (
-              <ChakraBarChart data={stats.categoryBreakdown} />
-            ) : (
-              <div className="flex items-center justify-center h-[300px] text-muted-foreground">
-                No spending data this month
-              </div>
-            )}
-          </CardContent>
-        </Card>
+      {/* Chart and Quick Add */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        <motion.div variants={item} className="lg:col-span-2">
+          <Card className="naruto-card border-none bg-card/40 h-full">
+            <CardHeader>
+              <CardTitle className="text-xl font-black uppercase tracking-tight">
+                Chakra <span className="text-primary">Composition</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {stats?.categoryBreakdown && stats.categoryBreakdown.length > 0 ? (
+                <div className="h-[350px] w-full">
+                  <ChakraBarChart data={stats.categoryBreakdown} />
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-[300px] text-muted-foreground gap-4">
+                  <div className="text-6xl grayscale opacity-20">📜</div>
+                  <p className="font-medium">No spending nature detected this month</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        {/* Quick Add Expense */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Quick Add Expense</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ExpenseForm compact />
-          </CardContent>
-        </Card>
+        <motion.div variants={item}>
+          <Card className="naruto-card border-none bg-primary/5 h-full relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-4 text-6xl opacity-10 group-hover:scale-125 transition-transform duration-700">🍜</div>
+            <CardHeader>
+              <CardTitle className="text-xl font-black uppercase tracking-tight">
+                Quick <span className="text-primary">Seal</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ExpenseForm compact />
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
 
       {/* Expense List */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Expenses</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ExpenseList />
-        </CardContent>
-      </Card>
-    </div>
+      <motion.div variants={item}>
+        <Card className="naruto-card border-none bg-card/40 overflow-visible">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="text-xl font-black uppercase tracking-tight">
+              Mission <span className="text-primary">Logs</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ExpenseList />
+          </CardContent>
+        </Card>
+      </motion.div>
+    </motion.div>
   );
 }

@@ -4,8 +4,13 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { toast } from "@/lib/toast";
+import { toast, missionComplete, missionFailed } from "@/lib/toast";
 import { RasenganLoader } from "@/components/rasengan-loader";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { UserPlus, Sparkles } from "lucide-react";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -19,17 +24,8 @@ export default function SignupPage() {
     
     if (password !== confirmPassword) {
       toast({
-        title: "❌ Passwords Don't Match",
-        description: "Please make sure your passwords match.",
-        type: "error",
-      });
-      return;
-    }
-
-    if (password.length < 6) {
-      toast({
-        title: "❌ Weak Password",
-        description: "Password must be at least 6 characters long.",
+        title: "Chakra Mismatch",
+        description: "Your security seals do not align. Try again.",
         type: "error",
       });
       return;
@@ -48,104 +44,106 @@ export default function SignupPage() {
 
       if (error) throw error;
 
-      toast({
-        title: "🎉 Registration Successful!",
-        description: "Check your email to verify your account.",
-        type: "success",
-      });
-
+      missionComplete("Academy registration successful! Check your scroll (email).");
       router.push("/login");
     } catch (error: any) {
-      toast({
-        title: "❌ Signup Failed",
-        description: error.message || "Something went wrong.",
-        type: "error",
-      });
+      missionFailed(error.message || "Recruitment failed. Shadow clones detected.");
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) {
-    return <RasenganLoader />;
-  }
+  if (loading) return <RasenganLoader />;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-primary mb-2">🍥 Naruto Finance</h1>
-          <p className="text-muted-foreground">Begin your ninja expense tracking journey</p>
+    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden p-6">
+      {/* Decorative Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-5">
+        <div className="absolute top-0 right-0 text-[30vw] select-none">🍃</div>
+        <div className="absolute bottom-0 left-0 text-[30vw] select-none grayscale rotate-180">🍃</div>
+      </div>
+
+      <motion.div 
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="w-full max-w-md z-10"
+      >
+        <div className="text-center mb-10">
+          <motion.div 
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            className="inline-block text-6xl mb-4"
+          >
+            🍥
+          </motion.div>
+          <h1 className="text-4xl font-black tracking-tighter uppercase leading-none">
+            RECRUITMENT <br />
+            <span className="text-primary italic">ACADEMY</span>
+          </h1>
+          <p className="text-muted-foreground font-bold text-xs uppercase tracking-[0.3em] mt-3 opacity-60">
+            Begin Your Shinobi Path
+          </p>
         </div>
 
-        {/* Signup Form */}
-        <div className="naruto-card p-6">
-          <h2 className="text-2xl font-bold mb-6">Create Account</h2>
-          <form onSubmit={handleSignup} className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email
-              </label>
-              <input
-                id="email"
+        <div className="naruto-card p-10 bg-card/60 backdrop-blur-xl border-2 border-primary/10">
+          <div className="flex items-center gap-2 mb-8">
+            <UserPlus className="h-5 w-5 text-primary" />
+            <h2 className="text-2xl font-black uppercase tracking-tight">Create <span className="text-primary italic">Identity</span></h2>
+          </div>
+
+          <form onSubmit={handleSignup} className="space-y-6">
+            <div className="space-y-2">
+              <Label className="font-black uppercase tracking-widest text-[10px] text-primary">Academy Email</Label>
+              <Input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="naruto-input w-full"
+                className="h-12 border-2 font-bold focus:ring-primary/20"
                 placeholder="ninja@leafvillage.com"
                 required
               />
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-2">
-                Password
-              </label>
-              <input
-                id="password"
+            <div className="space-y-2">
+              <Label className="font-black uppercase tracking-widest text-[10px] text-primary">New Security Seal</Label>
+              <Input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="naruto-input w-full"
+                className="h-12 border-2 font-bold focus:ring-primary/20"
                 placeholder="••••••••"
                 required
                 minLength={6}
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium mb-2"
-              >
-                Confirm Password
-              </label>
-              <input
-                id="confirmPassword"
+            <div className="space-y-2">
+              <Label className="font-black uppercase tracking-widest text-[10px] text-primary">Re-Validate Seal</Label>
+              <Input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="naruto-input w-full"
+                className="h-12 border-2 font-bold focus:ring-primary/20"
                 placeholder="••••••••"
                 required
                 minLength={6}
               />
             </div>
 
-            <button type="submit" className="naruto-button w-full">
-              Create Account
-            </button>
+            <Button type="submit" className="naruto-button w-full h-14 text-lg group mt-4">
+              <Sparkles className="h-5 w-5 mr-2 group-hover:animate-spin" />
+              SIGN UP
+            </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm">
-            <span className="text-muted-foreground">Already have an account? </span>
-            <Link href="/login" className="text-primary hover:underline font-medium">
-              Sign in
+          <div className="mt-8 text-center pt-6 border-t border-border/50">
+            <span className="text-muted-foreground text-xs font-bold uppercase tracking-widest">Already a Shinobi? </span>
+            <Link href="/login" className="text-primary hover:underline font-black uppercase tracking-widest text-xs">
+              Sign In
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

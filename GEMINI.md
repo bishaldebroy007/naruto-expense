@@ -56,10 +56,19 @@ The database consists of three primary tables managed via Drizzle ORM:
 1.  **Server Actions**: All database mutations (CRUD) MUST be implemented as server actions in `lib/db/actions.ts`.
 2.  **Type Safety**: Use `$inferSelect` and `$inferInsert` from Drizzle for data types. Avoid `any` at all costs.
 3.  **UI Components**: Prefer using or extending components in `components/ui/` built with Radix and Tailwind.
-4.  **Theme Integrity**: Adhere to the Naruto-inspired theme.
-    - **Leaf Village**: Light mode (Orange accents).
-    - **Akatsuki**: Dark mode (Red accents).
-5.  **Revalidation**: Always use `revalidatePath` in server actions after mutations to ensure data freshness in the App Router.
+### UI & Animation Standards
+1.  **Animations**: Use `framer-motion` for all page transitions and interactive elements.
+    -   *Page Entrance*: Use `initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}`.
+    -   *Staggered Lists*: Use `motion.div` with container/item variants for lists (e.g., Expense List).
+2.  **Theme Integrity**: Adhere to the high-contrast Naruto aesthetic.
+    -   **Leaf Village (Light)**: Warm whites, vibrant orange primary (`#F97316`), sunburst yellow accents.
+    -   **Akatsuki (Dark)**: Deep void black, crimson primary (`#EF4444`), glow effects.
+3.  **Components**:
+    -   Use `.naruto-card` for container elements (includes backdrop-blur and hover transforms).
+    -   Use `.naruto-button` for primary actions (includes hover glow and active scaling).
+    -   Terminology: Use "Shinobi", "Ryo", "Scrolls", "Jutsu", and "Seals" in UI copy.
+4.  **Feedback**: Always use the custom `toast` from `lib/toast.tsx` which includes themed icons and progress bars.
+
 
 ---
 

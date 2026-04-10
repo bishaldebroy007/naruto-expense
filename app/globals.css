@@ -48,76 +48,60 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Light theme - Leaf Village */
+/* Light theme - Leaf Village (Naruto Orange) */
 [data-theme="light"], :root {
-  --background: oklch(0.98 0.01 85); /* Warm off-white */
-  --foreground: oklch(0.15 0.02 35); /* Dark brown-black */
+  --background: oklch(0.99 0.01 85); /* Clean warm white */
+  --foreground: oklch(0.12 0.02 35); /* Deep brown-black */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.02 35);
+  --card-foreground: oklch(0.12 0.02 35);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.02 35);
-  --primary: oklch(0.65 0.22 45); /* Naruto orange */
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.95 0.02 85);
-  --secondary-foreground: oklch(0.25 0.02 35);
-  --muted: oklch(0.95 0.01 85);
-  --muted-foreground: oklch(0.55 0.02 35);
-  --accent: oklch(0.92 0.04 85); /* Light orange */
-  --accent-foreground: oklch(0.25 0.05 45);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.90 0.02 85);
-  --input: oklch(0.92 0.02 85);
-  --ring: oklch(0.65 0.22 45);
-  --chart-1: oklch(0.65 0.22 45); /* Fire (Orange) */
-  --chart-2: oklch(0.70 0.18 185); /* Wind (Cyan) */
-  --chart-3: oklch(0.55 0.22 285); /* Lightning (Purple) */
-  --chart-4: oklch(0.75 0.20 105); /* Earth (Yellow) */
-  --chart-5: oklch(0.65 0.22 165); /* Water (Green) */
-  --radius: 0.625rem;
-  --sidebar: oklch(0.97 0.02 85);
-  --sidebar-foreground: oklch(0.15 0.02 35);
-  --sidebar-primary: oklch(0.65 0.22 45);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.92 0.04 85);
-  --sidebar-accent-foreground: oklch(0.25 0.05 45);
-  --sidebar-border: oklch(0.90 0.02 85);
-  --sidebar-ring: oklch(0.65 0.22 45);
+  --popover-foreground: oklch(0.12 0.02 35);
+  --primary: oklch(0.68 0.22 48); /* Vibrant Naruto Orange */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.96 0.03 85); /* Soft Cream */
+  --secondary-foreground: oklch(0.25 0.05 45);
+  --muted: oklch(0.96 0.01 85);
+  --muted-foreground: oklch(0.50 0.02 35);
+  --accent: oklch(0.93 0.08 65); /* Sunburst Yellow */
+  --accent-foreground: oklch(0.30 0.10 45);
+  --destructive: oklch(0.55 0.22 25); /* Fire Red */
+  --border: oklch(0.92 0.02 85);
+  --input: oklch(0.94 0.02 85);
+  --ring: oklch(0.68 0.22 48);
+  --chart-1: oklch(0.68 0.22 48); /* Fire */
+  --chart-2: oklch(0.75 0.15 190); /* Wind */
+  --chart-3: oklch(0.60 0.20 280); /* Lightning */
+  --chart-4: oklch(0.70 0.18 85); /* Earth */
+  --chart-5: oklch(0.65 0.20 160); /* Water */
+  --radius: 0.75rem;
 }
 
-/* Dark theme - Akatsuki */
+/* Dark theme - Akatsuki (Cloud Crimson & Void Black) */
 [data-theme="dark"], .dark {
-  --background: oklch(0.12 0.02 270); /* Dark blue-black */
-  --foreground: oklch(0.95 0.01 85); /* Warm white */
-  --card: oklch(0.16 0.02 270);
-  --card-foreground: oklch(0.95 0.01 85);
-  --popover: oklch(0.16 0.02 270);
-  --popover-foreground: oklch(0.95 0.01 85);
-  --primary: oklch(0.60 0.24 25); /* Akatsuki red */
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.22 0.02 270);
-  --secondary-foreground: oklch(0.95 0.01 85);
-  --muted: oklch(0.22 0.02 270);
-  --muted-foreground: oklch(0.70 0.02 85);
-  --accent: oklch(0.25 0.06 25); /* Dark red */
-  --accent-foreground: oklch(0.95 0.02 25);
-  --destructive: oklch(0.65 0.25 25); /* Red */
-  --border: oklch(0.25 0.02 270);
-  --input: oklch(0.22 0.02 270);
-  --ring: oklch(0.60 0.24 25);
-  --chart-1: oklch(0.65 0.25 35); /* Fire (Red-orange) */
-  --chart-2: oklch(0.70 0.18 185); /* Wind (Cyan) */
-  --chart-3: oklch(0.60 0.22 295); /* Lightning (Purple) */
-  --chart-4: oklch(0.75 0.20 105); /* Earth (Yellow) */
-  --chart-5: oklch(0.65 0.22 165); /* Water (Green) */
-  --radius: 0.625rem;
-  --sidebar: oklch(0.14 0.02 270);
-  --sidebar-foreground: oklch(0.95 0.01 85);
-  --sidebar-primary: oklch(0.60 0.24 25);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.20 0.04 25);
-  --sidebar-accent-foreground: oklch(0.95 0.02 25);
-  --sidebar-border: oklch(0.22 0.02 270);
-  --sidebar-ring: oklch(0.60 0.24 25);
+  --background: oklch(0.10 0.01 270); /* Deep Void Black */
+  --foreground: oklch(0.98 0.01 85);
+  --card: oklch(0.14 0.02 270);
+  --card-foreground: oklch(0.98 0.01 85);
+  --popover: oklch(0.14 0.02 270);
+  --popover-foreground: oklch(0.98 0.01 85);
+  --primary: oklch(0.58 0.25 28); /* Akatsuki Crimson */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.18 0.02 270);
+  --secondary-foreground: oklch(0.98 0.01 85);
+  --muted: oklch(0.18 0.02 270);
+  --muted-foreground: oklch(0.65 0.02 85);
+  --accent: oklch(0.30 0.12 28); /* Deep Crimson Glow */
+  --accent-foreground: oklch(0.98 0.05 28);
+  --destructive: oklch(0.50 0.25 28);
+  --border: oklch(0.22 0.02 270);
+  --input: oklch(0.20 0.02 270);
+  --ring: oklch(0.58 0.25 28);
+  --chart-1: oklch(0.58 0.25 28); /* Akatsuki Red */
+  --chart-2: oklch(0.60 0.15 200); /* Dark Wind */
+  --chart-3: oklch(0.55 0.20 300); /* Dark Lightning */
+  --chart-4: oklch(0.65 0.15 90); /* Dark Earth */
+  --chart-5: oklch(0.55 0.18 170); /* Dark Water */
+  --radius: 0.75rem;
 }
 
 @layer base {
@@ -125,32 +109,38 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
+    @apply bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground;
+    background-image: radial-gradient(circle at 50% 50%, var(--primary)/0.02 0%, transparent 50%);
   }
 }
 
-/* Naruto-themed custom styles */
 @layer components {
   .naruto-card {
-    @apply bg-card border border-border rounded-lg shadow-md transition-all duration-200;
-    @apply hover:shadow-lg hover:shadow-primary/10;
+    @apply bg-card/80 backdrop-blur-md border border-border rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden;
+    @apply hover:shadow-[0_8px_48px_rgba(var(--primary-rgb),0.15)] hover:border-primary/30 hover:-translate-y-1;
   }
 
   .naruto-button {
-    @apply bg-primary text-primary-foreground font-semibold py-2 px-4 rounded-md;
-    @apply transition-all duration-200 hover:bg-primary/90 active:scale-95;
-    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply relative overflow-hidden bg-primary text-primary-foreground font-bold py-2.5 px-6 rounded-lg;
+    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)] active:scale-95;
+    @apply before:absolute before:inset-0 before:bg-white/10 before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-500;
   }
 
-  .naruto-input {
-    @apply border border-input bg-background px-3 py-2 rounded-md text-sm;
-    @apply focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent;
+  .chakra-glow {
+    @apply relative after:absolute after:inset-0 after:rounded-[inherit] after:shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)] after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-500;
   }
 
-  .jutsu-release {
-    @apply text-destructive hover:text-destructive/80 transition-colors;
+  .akatsuki-cloud {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 50 Q 35 40 45 50 Q 55 60 65 50 Q 75 40 85 50' stroke='rgba(239, 68, 68, 0.05)' fill='none'/%3E%3C/svg%3E");
+  }
+
+  /* Shinobi animations */
+  @keyframes shuriken-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .shuriken-loader {
+    animation: shuriken-spin 1s linear infinite;
   }
 }

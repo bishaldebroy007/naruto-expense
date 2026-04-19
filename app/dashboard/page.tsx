@@ -5,13 +5,7 @@ import { getDashboardStats, getUserLimits } from "@/lib/db/actions";
 import { formatCurrency } from "@/lib/utils/expenses";
 import { RasenganLoader } from "@/components/rasengan-loader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  TrendingUp,
-  Wallet,
-  Target,
-  Calendar,
-  Download,
-} from "lucide-react";
+import { TrendingUp, Wallet, Target, Calendar, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { exportExpensesToCSV } from "@/lib/db/actions";
 import { toast } from "@/lib/toast";
@@ -20,20 +14,23 @@ import { ExpenseList } from "@/components/expense-list";
 import { ExpenseForm } from "@/components/expense-form";
 import { SpendingLimitProgress } from "@/components/spending-limit-progress";
 import { motion, AnimatePresence } from "framer-motion";
+import { PiScrollFill } from "react-icons/pi";
+import { GiCrossedSabres } from "react-icons/gi";
+import { AiOutlineFileDone } from "react-icons/ai";
 
 const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
-    }
-  }
+      staggerChildren: 0.1,
+    },
+  },
 };
 
 const item = {
   hidden: { y: 20, opacity: 0 },
-  show: { y: 0, opacity: 1 }
+  show: { y: 0, opacity: 1 },
 };
 
 export default function DashboardPage() {
@@ -74,13 +71,13 @@ export default function DashboardPage() {
       URL.revokeObjectURL(url);
 
       toast({
-        title: "📥 Mission Complete!",
+        title: "Mission Complete!",
         description: "Your expenses have been exported to CSV.",
         type: "success",
       });
     } catch (error) {
       toast({
-        title: "❌ Export Failed",
+        title: "Export Failed",
         description: "Failed to export expenses. Please try again.",
         type: "error",
       });
@@ -92,14 +89,17 @@ export default function DashboardPage() {
   }
 
   return (
-    <motion.div 
+    <motion.div
       variants={container}
       initial="hidden"
       animate="show"
       className="space-y-8 pb-12"
     >
       {/* Page Title */}
-      <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+      <motion.div
+        variants={item}
+        className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6"
+      >
         <div>
           <h1 className="text-4xl font-black tracking-tight text-foreground uppercase">
             Shinobi <span className="text-primary italic">Ledger</span>
@@ -109,9 +109,9 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex gap-3">
-          <Button 
-            onClick={handleExportCSV} 
-            variant="outline" 
+          <Button
+            onClick={handleExportCSV}
+            variant="outline"
             className="h-11 px-6 border-2 font-bold hover:bg-muted"
           >
             <Download className="h-4 w-4 mr-2" />
@@ -122,14 +122,41 @@ export default function DashboardPage() {
       </motion.div>
 
       {/* Summary Cards */}
-      <motion.div variants={item} className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <motion.div
+        variants={item}
+        className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
+      >
         {[
-          { label: "Monthly Flow", value: stats?.monthlySpent, icon: Calendar, sub: "Current Moon" },
-          { label: "Yearly Path", value: stats?.yearlySpent, icon: TrendingUp, sub: "Full Cycle" },
-          { label: "Total Ryo", value: stats?.allTimeSpent, icon: Wallet, sub: "Lifetime" },
-          { label: "Primary Nature", value: stats?.topCategory || "N/A", icon: Target, sub: "Top Cost", isCurrency: false },
+          {
+            label: "Monthly Flow",
+            value: stats?.monthlySpent,
+            icon: Calendar,
+            sub: "Current Moon",
+          },
+          {
+            label: "Yearly Path",
+            value: stats?.yearlySpent,
+            icon: TrendingUp,
+            sub: "Full Cycle",
+          },
+          {
+            label: "Total Ryo",
+            value: stats?.allTimeSpent,
+            icon: Wallet,
+            sub: "Lifetime",
+          },
+          {
+            label: "Primary Nature",
+            value: stats?.topCategory || "N/A",
+            icon: Target,
+            sub: "Top Cost",
+            isCurrency: false,
+          },
         ].map((card, idx) => (
-          <Card key={idx} className="naruto-card border-none bg-card/40 hover:bg-card/60">
+          <Card
+            key={idx}
+            className="naruto-card border-none bg-card/40 hover:bg-card/60"
+          >
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                 {card.label}
@@ -138,7 +165,9 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-black">
-                {card.isCurrency !== false ? formatCurrency(card.value || 0) : card.value}
+                {card.isCurrency !== false
+                  ? formatCurrency(card.value || 0)
+                  : card.value}
               </div>
               <p className="text-[10px] font-bold uppercase tracking-tighter text-primary/60 mt-1">
                 {card.sub}
@@ -150,16 +179,19 @@ export default function DashboardPage() {
 
       {/* Spending Limit Progress */}
       <AnimatePresence>
-        {limits && (limits.dailyLimitCents || limits.monthlyLimitCents || limits.yearlyLimitCents) && (
-          <motion.div 
-            variants={item}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-          >
-            <SpendingLimitProgress limits={limits} />
-          </motion.div>
-        )}
+        {limits &&
+          (limits.dailyLimitCents ||
+            limits.monthlyLimitCents ||
+            limits.yearlyLimitCents) && (
+            <motion.div
+              variants={item}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+            >
+              <SpendingLimitProgress limits={limits} />
+            </motion.div>
+          )}
       </AnimatePresence>
 
       {/* Chart and Quick Add */}
@@ -172,14 +204,19 @@ export default function DashboardPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {stats?.categoryBreakdown && stats.categoryBreakdown.length > 0 ? (
-                <div className="h-[350px] w-full">
+              {stats?.categoryBreakdown &&
+              stats.categoryBreakdown.length > 0 ? (
+                <div className="h-87.5 w-full">
                   <ChakraBarChart data={stats.categoryBreakdown} />
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center h-[300px] text-muted-foreground gap-4">
-                  <div className="text-6xl grayscale opacity-20">📜</div>
-                  <p className="font-medium">No spending nature detected this month</p>
+                <div className="flex flex-col items-center justify-center h-75 text-muted-foreground gap-4">
+                  <div className="text-6xl grayscale opacity-20">
+                    <PiScrollFill color="yellow" />
+                  </div>
+                  <p className="font-medium">
+                    No spending nature detected this month
+                  </p>
                 </div>
               )}
             </CardContent>
@@ -188,7 +225,9 @@ export default function DashboardPage() {
 
         <motion.div variants={item}>
           <Card className="naruto-card border-none bg-primary/5 h-full relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 text-6xl opacity-10 group-hover:scale-125 transition-transform duration-700">🍜</div>
+            <div className="absolute top-0 right-0 p-4 text-6xl opacity-10 group-hover:scale-125 transition-transform duration-700">
+              🍜
+            </div>
             <CardHeader>
               <CardTitle className="text-xl font-black uppercase tracking-tight">
                 Quick <span className="text-primary">Seal</span>

@@ -15,8 +15,8 @@ import { ExpenseForm } from "@/components/expense-form";
 import { SpendingLimitProgress } from "@/components/spending-limit-progress";
 import { motion, AnimatePresence } from "framer-motion";
 import { PiScrollFill } from "react-icons/pi";
-import { GiCrossedSabres } from "react-icons/gi";
-import { AiOutlineFileDone } from "react-icons/ai";
+// import { GiCrossedSabres } from "react-icons/gi";
+// import { AiOutlineFileDone } from "react-icons/ai";
 
 const container = {
   hidden: { opacity: 0 },

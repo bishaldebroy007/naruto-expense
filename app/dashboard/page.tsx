@@ -33,10 +33,13 @@ const item = {
   show: { y: 0, opacity: 1 },
 };
 
+type DashboardStats = Awaited<ReturnType<typeof getDashboardStats>>;
+type UserLimits = Awaited<ReturnType<typeof getUserLimits>>;
+
 export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState<any>(null);
-  const [limits, setLimits] = useState<any>(null);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [limits, setLimits] = useState<UserLimits | null>(null);
 
   useEffect(() => {
     async function loadData() {
@@ -75,7 +78,7 @@ export default function DashboardPage() {
         description: "Your expenses have been exported to CSV.",
         type: "success",
       });
-    } catch (error) {
+    } catch {
       toast({
         title: "Export Failed",
         description: "Failed to export expenses. Please try again.",
@@ -166,7 +169,9 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-black">
                 {card.isCurrency !== false
-                  ? formatCurrency(card.value || 0)
+                  ? formatCurrency(
+                      typeof card.value === "number" ? card.value : 0,
+                    )
                   : card.value}
               </div>
               <p className="text-[10px] font-bold uppercase tracking-tighter text-primary/60 mt-1">

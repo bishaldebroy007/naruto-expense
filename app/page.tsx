@@ -4,23 +4,50 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
 import { GiNinjaHead } from "react-icons/gi";
 import { BsFileBarGraph } from "react-icons/bs";
 import { GiBullseye } from "react-icons/gi";
 
+// Type for each icon's random animation parameters
+type IconAnimation = {
+  initialX: number;
+  initialY: number;
+  animateX1: number;
+  animateY1: number;
+  animateX2: number;
+  animateY2: number;
+  duration: number;
+};
+
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
+  const [iconAnimations, setIconAnimations] = useState<IconAnimation[]>([]);
 
   useEffect(() => {
-    setMounted(true);
+    const frameId = requestAnimationFrame(() => {
+      setMounted(true);
+
+      // Generate random values for all 6 icons once, after mount
+      const animations: IconAnimation[] = Array.from({ length: 6 }, () => ({
+        initialX: Math.random() * 1000 - 500,
+        initialY: Math.random() * 1000 - 500,
+        animateX1: Math.random() * 20 - 10,
+        animateY1: Math.random() * 20 - 10,
+        animateX2: Math.random() * 20 - 10,
+        animateY2: Math.random() * 20 - 10,
+        duration: 5 + Math.random() * 5,
+      }));
+      setIconAnimations(animations);
+    });
+
+    return () => cancelAnimationFrame(frameId);
   }, []);
 
   if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background Decorative Elements */}
+      {/* Background Decorative Elements (unchanged) */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-20">
         <motion.div
           animate={{
@@ -28,7 +55,7 @@ export default function HomePage() {
             scale: [1, 1.1, 1],
           }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-1/4 -left-1/4 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[100px]"
+          className="absolute -top-1/4 -left-1/4 w-150 h-150 bg-primary/20 rounded-full blur-[100px]"
         />
         <motion.div
           animate={{
@@ -36,11 +63,11 @@ export default function HomePage() {
             scale: [1, 1.2, 1],
           }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-destructive/20 rounded-full blur-[100px]"
+          className="absolute -bottom-1/4 -right-1/4 w-150 h-150 bg-destructive/20 rounded-full blur-[100px]"
         />
       </div>
 
-      {/* Navigation */}
+      {/* Navigation (unchanged) */}
       <nav className="relative z-10 flex items-center justify-between px-6 py-6 max-w-7xl mx-auto">
         <motion.div
           initial={{ x: -20, opacity: 0 }}
@@ -68,7 +95,7 @@ export default function HomePage() {
         </motion.div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section (unchanged) */}
       <main className="relative z-10 flex flex-col items-center justify-center pt-20 pb-32 px-6 max-w-5xl mx-auto text-center">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
@@ -121,24 +148,24 @@ export default function HomePage() {
           </Link>
         </motion.div>
 
-        {/* Floating Icons Animation */}
+        {/* Floating Icons - now using state-driven random values */}
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-          {[...Array(6)].map((_, i) => (
+          {iconAnimations.map((anim, i) => (
             <motion.div
               key={i}
               initial={{
-                x: Math.random() * 1000 - 500,
-                y: Math.random() * 1000 - 500,
+                x: anim.initialX,
+                y: anim.initialY,
                 opacity: 0,
               }}
               animate={{
-                x: [null, Math.random() * 20 - 10, Math.random() * 20 - 10],
-                y: [null, Math.random() * 20 - 10, Math.random() * 20 - 10],
+                x: [null, anim.animateX1, anim.animateX2],
+                y: [null, anim.animateY1, anim.animateY2],
                 opacity: [0, 0.4, 0],
                 scale: [0.5, 1, 0.5],
               }}
               transition={{
-                duration: 5 + Math.random() * 5,
+                duration: anim.duration,
                 repeat: Infinity,
                 delay: i * 0.5,
               }}
@@ -154,7 +181,7 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Features Grid */}
+      {/* Features Grid, Quote Section, Footer (unchanged) */}
       <section className="relative z-10 max-w-7xl mx-auto px-6 pb-40">
         <div className="grid md:grid-cols-3 gap-8">
           {[
@@ -194,7 +221,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Quote Section */}
       <section className="relative z-10 py-24 bg-primary/5 border-y border-primary/10">
         <div className="max-w-4xl mx-auto px-6 text-center italic">
           <motion.p
@@ -211,7 +237,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="relative z-10 py-12 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-default">

@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+import { GiNinjaHead } from "react-icons/gi";
+import { BsFileBarGraph } from "react-icons/bs";
+import { GiBullseye } from "react-icons/gi";
+
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
 
@@ -18,16 +22,16 @@ export default function HomePage() {
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Background Decorative Elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-20">
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             rotate: 360,
             scale: [1, 1.1, 1],
           }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           className="absolute -top-1/4 -left-1/4 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[100px]"
         />
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             rotate: -360,
             scale: [1, 1.2, 1],
           }}
@@ -38,21 +42,25 @@ export default function HomePage() {
 
       {/* Navigation */}
       <nav className="relative z-10 flex items-center justify-between px-6 py-6 max-w-7xl mx-auto">
-        <motion.div 
+        <motion.div
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           className="flex items-center gap-2"
         >
           <span className="text-3xl">🍥</span>
-          <span className="text-xl font-bold tracking-tighter">NARUTO FINANCE</span>
+          <span className="text-xl font-bold tracking-tighter">
+            NARUTO FINANCE
+          </span>
         </motion.div>
-        <motion.div 
+        <motion.div
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           className="flex gap-4"
         >
           <Link href="/login">
-            <Button variant="ghost" className="font-semibold">Login</Button>
+            <Button variant="ghost" className="font-semibold">
+              Login
+            </Button>
           </Link>
           <Link href="/signup">
             <Button className="naruto-button">Join Village</Button>
@@ -70,8 +78,8 @@ export default function HomePage() {
         >
           S-Rank Finance Tracking
         </motion.div>
-        
-        <motion.h1 
+
+        <motion.h1
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -81,17 +89,17 @@ export default function HomePage() {
           <span className="text-primary italic">FINANCIAL CHAKRA</span>
         </motion.h1>
 
-        <motion.p 
+        <motion.p
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
           className="text-xl md:text-2xl text-muted-foreground max-w-2xl mb-12"
         >
-          Stop losing track of your ryo. Log expenses, set mission budgets, 
-          and watch your financial power grow with ninja precision.
+          Stop losing track of your ryo. Log expenses, set mission budgets, and
+          watch your financial power grow with ninja precision.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -103,7 +111,11 @@ export default function HomePage() {
             </Button>
           </Link>
           <Link href="/login">
-            <Button size="lg" variant="outline" className="h-14 px-10 text-lg border-2 hover:bg-muted transition-colors">
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-14 px-10 text-lg border-2 hover:bg-muted transition-colors"
+            >
               Enter Dashboard
             </Button>
           </Link>
@@ -114,29 +126,29 @@ export default function HomePage() {
           {[...Array(6)].map((_, i) => (
             <motion.div
               key={i}
-              initial={{ 
-                x: Math.random() * 1000 - 500, 
+              initial={{
+                x: Math.random() * 1000 - 500,
                 y: Math.random() * 1000 - 500,
-                opacity: 0 
+                opacity: 0,
               }}
-              animate={{ 
+              animate={{
                 x: [null, Math.random() * 20 - 10, Math.random() * 20 - 10],
                 y: [null, Math.random() * 20 - 10, Math.random() * 20 - 10],
                 opacity: [0, 0.4, 0],
                 scale: [0.5, 1, 0.5],
               }}
-              transition={{ 
-                duration: 5 + Math.random() * 5, 
+              transition={{
+                duration: 5 + Math.random() * 5,
                 repeat: Infinity,
-                delay: i * 0.5 
+                delay: i * 0.5,
               }}
               className="absolute text-4xl"
-              style={{ 
-                left: `${15 + i * 15}%`, 
-                top: `${20 + (i % 3) * 25}%` 
+              style={{
+                left: `${15 + i * 15}%`,
+                top: `${20 + (i % 3) * 25}%`,
               }}
             >
-              {['🍥', '🗡️', '🍜', '🍃', '🔥', '📜'][i]}
+              {["🍥", "🗡️", "🍜", "🍃", "🔥", "📜"][i]}
             </motion.div>
           ))}
         </div>
@@ -146,21 +158,21 @@ export default function HomePage() {
       <section className="relative z-10 max-w-7xl mx-auto px-6 pb-40">
         <div className="grid md:grid-cols-3 gap-8">
           {[
-            { 
-              icon: "🥷", 
-              title: "Ninja Precision", 
-              desc: "Instant logging of every ryo spent on missions and ramen." 
+            {
+              icon: <GiNinjaHead />,
+              title: "Ninja Precision",
+              desc: "Instant logging of every ryo spent on missions and ramen.",
             },
-            { 
-              icon: "📊", 
-              title: "Chakra Analysis", 
-              desc: "Visual breakdowns of your spending nature with beautiful charts." 
+            {
+              icon: <BsFileBarGraph color="orange" size={50} />,
+              title: "Chakra Analysis",
+              desc: "Visual breakdowns of your spending nature with beautiful charts.",
             },
-            { 
-              icon: "🎯", 
-              title: "Budget Seal", 
-              desc: "Set strict limits that keep your finances from going out of control." 
-            }
+            {
+              icon: <GiBullseye color="red" size={50} />,
+              title: "Budget Seal",
+              desc: "Set strict limits that keep your finances from going out of control.",
+            },
           ].map((feature, i) => (
             <motion.div
               key={i}
@@ -185,14 +197,17 @@ export default function HomePage() {
       {/* Quote Section */}
       <section className="relative z-10 py-24 bg-primary/5 border-y border-primary/10">
         <div className="max-w-4xl mx-auto px-6 text-center italic">
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             className="text-3xl md:text-4xl font-medium mb-6 leading-tight"
           >
-            "It's not about how much you earn, it's about your ninja way of managing it."
+            &quot;It&apos;s not about how much you earn, it&apos;s about your
+            ninja way of managing it.&quot;
           </motion.p>
-          <p className="text-primary font-bold tracking-widest uppercase">— THE FINANCIAL HOKAGE</p>
+          <p className="text-primary font-bold tracking-widest uppercase">
+            — THE FINANCIAL HOKAGE
+          </p>
         </div>
       </section>
 
@@ -201,15 +216,26 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
             <span className="text-2xl">🍥</span>
-            <span className="font-bold tracking-tighter">NARUTO FINANCE</span>
+            <span className="cursor-pointer font-bold tracking-tighter">
+              NARUTO FINANCE
+            </span>
           </div>
           <div className="text-muted-foreground text-sm">
             © 2026 BELIEVE IT. OPEN SOURCE MIT.
           </div>
           <div className="flex gap-6 text-sm font-medium">
-            <Link href="#" className="hover:text-primary transition-colors">Scroll of Privacy</Link>
-            <Link href="#" className="hover:text-primary transition-colors">Village Terms</Link>
-            <Link href="#" className="hover:text-primary transition-colors">GitHub</Link>
+            <Link href="#" className="hover:text-primary transition-colors">
+              Scroll of Privacy
+            </Link>
+            <Link href="#" className="hover:text-primary transition-colors">
+              Village Terms
+            </Link>
+            <Link
+              href="https://github.com/bishaldebroy007/naruto-expense"
+              className="hover:text-primary transition-colors"
+            >
+              GitHub
+            </Link>
           </div>
         </div>
       </footer>

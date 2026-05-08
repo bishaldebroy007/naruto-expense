@@ -235,6 +235,14 @@ When filing a bug, include:
 - Browser and OS information
 - Screenshots if relevant
 
+## Previews of some pages
+
+<img width="1832" height="924" alt="image" src="https://github.com/user-attachments/assets/ff9ef6e6-ba48-420c-becb-f39db11e1305" /></br>
+
+<img width="1862" height="929" alt="image" src="https://github.com/user-attachments/assets/22ccc969-0f14-41b7-a305-290cd91ec0e0" />
+
+
+
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
